@@ -1,10 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
-from sqlalchemy.orm import validates
+from sqlalchemy_serializer import SerializerMixin
+
 from app import db
 #from Customers import Customers
 
-class Transactions(db.Model):
+class Transactions(db.Model,SerializerMixin):
     __tablename__ = 'transactions'
 
     id = db.Column(db.Integer, primary_key=True)

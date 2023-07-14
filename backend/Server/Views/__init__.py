@@ -11,7 +11,7 @@ api = Api(Version_one)
 
 # all path endpoints
 # customer paths 
-api.add_resource(GetAllCustomers, '/customers', endpoint= 'customer')
+api.add_resource(GetAllCustomers, '/customers')
 api.add_resource(AddCustomer, '/customers')
 api.add_resource(CustomerResourcesById, '/customers/<int:customer_id>')
 
