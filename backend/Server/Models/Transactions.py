@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from sqlalchemy_serializer import SerializerMixin
+from datetime import datetime
 
 from app import db
 #from Customers import Customers
@@ -12,8 +13,9 @@ class Transactions(db.Model,SerializerMixin):
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
     amount = db.Column(db.Integer, nullable=False)
     transaction_date = db.Column(db.DateTime,server_default=db.func.now() )
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow())
 
     customer = db.relationship('Customers', back_populates='transactions')
 
 def __repr__(self):
-        return f"Transaction(id={self.id}, customer_id={self.customer_id}, amount={self.amount}, transaction_date={self.transaction_date})"
+        return f"Transaction(id={self.id}, customer_id={self.customer_id}, amount={self.amount}, transaction_date={self.transaction_date}, updated_at={self.updated_at})"
