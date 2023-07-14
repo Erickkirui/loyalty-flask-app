@@ -12,7 +12,7 @@ class Transactions(db.Model):
     amount = db.Column(db.Integer, nullable=False)
     transaction_date = db.Column(db.DateTime,server_default=db.func.now() )
 
-    customer_name = db.relationship("Customers", back_populates="transactions")
+    customer = db.relationship('Customers', back_populates='transactions')
 
 def __repr__(self):
         return f"Transaction(id={self.id}, customer_id={self.customer_id}, amount={self.amount}, transaction_date={self.transaction_date})"

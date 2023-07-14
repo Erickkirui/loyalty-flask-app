@@ -5,6 +5,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 db = SQLAlchemy()
+app = Flask(__name__)
+
+def initialize_views():
+    from Server.Views import Version_one
+    app.register_blueprint(Version_one)
+
 
 def initialize_models():
     from Server.Models.Customers import Customers
@@ -15,11 +21,10 @@ def initialize_models():
     Customers.loyalty_points = db.relationship("LoyaltyPoints", back_populates="customer")
 
     Transactions.customer = db.relationship("Customers", back_populates="transactions")
-
     LoyaltyPoints.customer = db.relationship("Customers", back_populates="loyalty_points")
 
 def create_app(config_name):
-    app = Flask(__name__)
+    
     app.config.from_object(config_name)
 
     app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
@@ -36,5 +41,7 @@ def create_app(config_name):
 
         # Create the database tables (if they don't exist)
         db.create_all()
+
+    initialize_views()
 
     return app
